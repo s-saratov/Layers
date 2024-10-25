@@ -6,11 +6,11 @@ public class Car {
 
     // Поля
 
-    private final int id;
-    private String model;
-    private final int year;
-    private double price;
-    private boolean isBusy; // значение по умолчанию false
+    private final int id;   // идентификационный номер
+    private String model;   // модель
+    private final int year; // год выпуска
+    private double price;   // цена
+    private boolean isBusy; // статус: занята или нет (значение по умолчанию false)
 
     // Конструктор
 
@@ -55,7 +55,9 @@ public class Car {
         isBusy = busy;
     }
 
-    // Метод, возвращающий строковое представление экземпляра класса
+    // Методы
+
+    // Возвращает строковое представление экземпляра класса
 
     @Override
     public String toString() {
@@ -68,7 +70,7 @@ public class Car {
                 '}';
     }
 
-    // Метод, проверяющий равенство двух автомобилей
+    // Проверяет равенство двух автомобилей
 
     @Override
     public boolean equals(Object o) {
