@@ -14,7 +14,7 @@ CRUD-операции:
     - Delete (удаление) - удаление данных.
  */
 
-public class CarRepositoryImpl implements CarRepository{
+public class CarRepositoryImpl implements CarRepository {
 
     // Здесь будут храниться все автомобили. Имитация базы данных
     private final MyList<Car> cars;
@@ -23,14 +23,18 @@ public class CarRepositoryImpl implements CarRepository{
     private final AtomicInteger currentID = new AtomicInteger(1);
 
     // Конструктор
-        public CarRepositoryImpl() {
+    public CarRepositoryImpl() {
         this.cars = new MyArrayList<>();
+        // Добавляем три автомобиля, изначально доступных для сдачи в аренду
+        addCar("Renault Clio", 2020, 30.5);
+        addCar("Volkswagen Passat", 2019, 45.0);
+        addCar("BMW 5 Series", 2021, 85.0);
     }
 
     // Методы
 
     // Добавляет автомобиль в "хранилище"
-        @Override
+    @Override
     public void addCar(String model, int year, double price) {
         // currentID.getAndIncrement() - аналог currentID++; => получение текущего ID и затем увеличение его на 1
         Car car = new Car(currentID.getAndIncrement(), model, year, price);
@@ -38,7 +42,7 @@ public class CarRepositoryImpl implements CarRepository{
     }
 
     // Возвращает текущий список автомобилей
-        @Override
+    @Override
     public MyList<Car> getAllCars() {
         return cars;
     }

@@ -1,9 +1,11 @@
 package service;
 
 import model.Car;
+import model.Role;
 import model.User;
 import repository.CarRepository;
 import repository.UserRepository;
+import utils.MyArrayList;
 import utils.MyList;
 
 public class MainServiceImpl implements MainService{
@@ -23,10 +25,16 @@ public class MainServiceImpl implements MainService{
 
     // Методы
 
+    // Возвращает автомобиль по ID
+    public Car getByID (int id) {
+        if (id < 0) return null; // исключаем передачу некорректных данных
+        return repositoryCar.getByID(id);
+    }
+
     // Добавляет автомобиль в список
     @Override
     public void addCar(String model, int year, double price) {
-
+        repositoryCar.addCar(model, year, price);
     }
 
     // Возвращает текущий список автомобилей
@@ -44,7 +52,7 @@ public class MainServiceImpl implements MainService{
     // Возвращает список свободных автомобилей
     @Override
     public MyList<Car> getFreeCars() {
-        return null;
+        return repositoryCar.getFreeCars();
     }
 
     // Обновляет цену автомобиля
@@ -61,13 +69,30 @@ public class MainServiceImpl implements MainService{
     // Осуществляет взятие автомобиля в аренду и возвращает статус успеха операции
     @Override
     public boolean takeCar(int id) {
+        if (id < 0) return false; // исключаем передачу некорректных данных
         Car car = repositoryCar.getByID(id);
         /*
         1. Проверить, что автомобиль найден и свободен. Если нет - закончить метод;
         2. Если да: пометить автомобиль как занятый;
         3. Добавить автомобиль в список текущего пользователя
          */
-        return false;
+        if (car == null || car.isBusy()) return false;
+        car.setBusy(true);
+        activeUser.addCarToUserCars(car);
+        return true;
+    }
+
+    // Осуществляет возврат автомобиля от арендатора и возвращает статус успеха операции
+
+    @Override
+    public boolean returnCar(int id) {
+        if (id < 0) return false; // исключаем передачу некорректных данных
+        if (activeUser.getUserCars().isEmpty()) return false;
+        if (!activeUser.getUserCars().contains(repositoryCar.getByID(id))) return false;
+
+        activeUser.removeCarFromUserCars(repositoryCar.getByID(id));
+        repositoryCar.getByID(id).setBusy(false);
+        return true;
     }
 
     // Удаляет автомобиль из хранилища
@@ -84,6 +109,8 @@ public class MainServiceImpl implements MainService{
     public User registerUser(String email, String password) {
         // Добавить валидацию email и password
         // Если не прошли валидацию - закончить работу метода, вернуть null
+
+        if(email == null || password == null) return null; // исключение передачи null
 
         if(repositoryUser.isEmailExists(email)) {
             System.out.println("Email already exists");
@@ -106,14 +133,22 @@ public class MainServiceImpl implements MainService{
         5. Залогинить пользователя - пометить как активного пользователя системы
          */
 
+        if (email == null || password == null) return false; // исключение передачи null
+
         User user = repositoryUser.getUserByEmail(email);
+
         if (user == null) {
-            System.out.println("Invalid email or password");
+            System.out.println("Адрес электронной почты введён неверно. Повторите ввод.");
             return false;
         }
 
         if(!user.getPassword().equals(password)) {
-            System.out.println("Invalid email or password");
+            System.out.println("Пароль введён неверно. Повторите ввод.");
+            return false;
+        }
+
+        if (user.getRole() == Role.BLOCKED) {
+            System.out.println("\nВход в систему невозможен. Ваша учётная запись заблокирована.");
             return false;
         }
 
@@ -126,7 +161,20 @@ public class MainServiceImpl implements MainService{
         activeUser = null;
     }
 
+    // Возвращает активного пользователя
+    @Override
     public User getActiveUser() {
         return activeUser;
+    }
+
+    // Возвращает список пользователей по заданным ролям
+    @Override
+    public MyList<User> getUsersByRole(Role... roles) {
+        return repositoryUser.getUsersByRole(roles);
+    }
+
+    // Возвращает объект пользователя по адресу электронной почты
+    public User getUserByEmail(String email) {
+        return repositoryUser.getUserByEmail(email);
     }
 }

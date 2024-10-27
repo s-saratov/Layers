@@ -9,7 +9,7 @@ public class Car {
     private final int id;   // идентификационный номер
     private String model;   // модель
     private final int year; // год выпуска
-    private double price;   // цена
+    private double price;   // стоимость аренды
     private boolean isBusy; // статус: занята или нет (значение по умолчанию false)
 
     // Конструктор

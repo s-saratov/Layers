@@ -99,7 +99,7 @@ public class MyArrayList<T> implements MyList<T>, Iterable<T> {
 
         String result = "[";
         for (int i = 0; i < cursor; i++) {
-            result = result + array[i] + (i < cursor - 1 ? ", " : "]"); //", " / "]"
+            result = result + array[i] + (i < cursor - 1 ? ",\n" : "]"); //", " / "]"
         }
 
         return result;

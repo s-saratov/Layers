@@ -1,6 +1,8 @@
 package repository;
 
+import model.Role;
 import model.User;
+import utils.MyList;
 
 public interface UserRepository {
 
@@ -12,7 +14,10 @@ public interface UserRepository {
     // Проверяет, существует ли данный адрес электронной почты
     boolean isEmailExists(String email);
 
+    // Возвращает список пользователей по заданным ролям
+    public MyList<User> getUsersByRole(Role... roles);
+
     // Возвращает объект пользователя по адресу электронной почты
-    User getUserByEmail(String email);
+    public User getUserByEmail(String email);
 
 }

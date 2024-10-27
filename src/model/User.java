@@ -51,8 +51,39 @@ public class User {
         this.role = role;
     }
 
-    // Метод, возвращающий строковое представление экземпляра класса
+    // Методы
 
+    // Добавляет автомобиль в список пользователя
+
+    public boolean addCarToUserCars(Car car) {
+        if (car == null) return false; // исключаем передачу null
+
+        // Проверяем, содержится ли уже автомобиль в списке пользователя
+        if (userCars.contains(car)) {
+            System.out.println("Данный автомобиль уже взят Вами в аренду.");
+            return false;
+        }
+
+        userCars.add(car);
+        return true;
+    }
+
+    // Удаляет автомобиль из списка пользователя
+
+    public boolean removeCarFromUserCars(Car car) {
+        if (car == null) return false; // исключаем передачу null
+
+        // Проверяем, содержится ли уже автомобиль в списке пользователя
+        if (!userCars.contains(car)) {
+            System.out.println("Данный автомобиль не находится у Вас в аренде.");
+            return false;
+        }
+
+        userCars.remove(car);
+        return true;
+    }
+
+    // Возвращает строковое представление экземпляра класса
     @Override
     public String toString() {
         return "User{" +
