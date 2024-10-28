@@ -56,6 +56,4 @@ public interface MainService {
 
     void logout();
 
-
-
 }
