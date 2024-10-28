@@ -3,16 +3,16 @@ package model;
 import utils.MyArrayList;
 import utils.MyList;
 
+/**
+ * @author Sergey Bugaenko
+ * {@code @date} 24.10.2024
+ */
+
 public class User {
-
-    // Поля
-
     private String email;
     private String password;
     private Role role;
     private final MyList<Car> userCars;
-
-    // Конструктор
 
     public User(String email, String password) {
         this.email = email;
@@ -21,7 +21,21 @@ public class User {
         this.userCars = new MyArrayList<>();
     }
 
-    // Геттеры и сеттеры
+    @Override
+    public String toString() {
+        return "User{" +
+                "email='" + email + '\'' +
+                ", userCars=" + userCars +
+                '}';
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     public String getEmail() {
         return email;
@@ -41,23 +55,5 @@ public class User {
 
     public MyList<Car> getUserCars() {
         return userCars;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    // Метод, возвращающий строковое представление экземпляра класса
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "email='" + email + '\'' +
-                ", userCars=" + userCars +
-                '}';
     }
 }

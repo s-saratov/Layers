@@ -6,53 +6,65 @@ import utils.MyList;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-/*
-CRUD-операции:
-    - Create (создание) - добавление новых данных;
-    - Read (чтение) - получение или чтение данных;
-    - Update (обновление) - изменение существующих данных;
-    - Delete (удаление) - удаление данных.
+/**
+ * @author Sergey Bugaenko
+ * {@code @date} 24.10.2024
  */
 
-public class CarRepositoryImpl implements CarRepository{
+/*
+CRUD - операции
+- Create (Создание) - добавление новых данных
+- Read (Чтение) - получение или чтение данных
+- Update (Обновление) - изменение существующих данных
+- Delete (Удаление) - удаление данных
+ */
 
-    // Здесь будут храниться все автомобили. Имитация базы данных
+
+public class CarRepositoryImpl implements CarRepository {
+
+    // тут будут хранится все наши машинки. Имитация БД
     private final MyList<Car> cars;
 
-    // Объект, отвечающий за генерацию уникальных ID
-    private final AtomicInteger currentID = new AtomicInteger(1);
+    // объект, отвечающий за генерацию уникальных id
+    private final AtomicInteger currentId = new AtomicInteger(1);
 
-    // Конструктор
-        public CarRepositoryImpl() {
+    public CarRepositoryImpl() {
         this.cars = new MyArrayList<>();
+        addCars();
     }
 
-    // Методы
+    private void addCars() {
+        cars.addAll(
+                new Car(currentId.getAndIncrement(), "VW Golf", 2021, 20000.00),
+                new Car(currentId.getAndIncrement(), "VW Golf", 2019, 17500.00),
+                new Car(currentId.getAndIncrement(), "VW Passat", 2022, 30000.00),
+                new Car(currentId.getAndIncrement(), "VW Passat", 2020, 24300.00),
+                new Car(currentId.getAndIncrement(), "VW Tiguan", 2021, 28000.00),
+                new Car(currentId.getAndIncrement(), "VW Tiguan", 2023, 34000.00)
+        );
+    }
 
-    // Добавляет автомобиль в "хранилище"
-        @Override
+
+    @Override
     public void addCar(String model, int year, double price) {
-        // currentID.getAndIncrement() - аналог currentID++; => получение текущего ID и затем увеличение его на 1
-        Car car = new Car(currentID.getAndIncrement(), model, year, price);
+        //currentId.getAndIncrement() -> аналог currentId++; -> получение текущего id и затем увеличение его на +1
+        Car car = new Car(currentId.getAndIncrement(), model, year, price);
         cars.add(car); // сохранение в "хранилище"
     }
 
-    // Возвращает текущий список автомобилей
-        @Override
+    @Override
     public MyList<Car> getAllCars() {
         return cars;
     }
 
-    // Возвращает автомобиль по ID
     @Override
-    public Car getByID(int id) {
+    public Car getById(int id) {
         for (Car car : cars) {
             if (car.getId() == id) return car;
         }
         return null;
     }
 
-    // Возвращает список автомобилей по модели
     @Override
     public MyList<Car> getCarsByModel(String model) {
         MyList<Car> result = new MyArrayList<>();
@@ -62,35 +74,54 @@ public class CarRepositoryImpl implements CarRepository{
         return result;
     }
 
-    // Возвращает список свободных автомобилей (т.е. тех, у которых isBusy == false)
+    // Метод должен вернуть список всех свободных машин.
+    // Т.е. список машин, у которых isBusy = false
     @Override
     public MyList<Car> getFreeCars() {
         MyList<Car> result = new MyArrayList<>();
+
+        // Занятая - isBusy = true
+        // Свободная - не занятая - isBusy = false
+
         for (Car car : cars) {
-            if (!car.isBusy()) result.add(car);
+            // false | true
+            // Если машина НЕ занята!
+            if (!car.isBusy()) {
+                result.add(car);
+            }
+
+            // Тоже самое
+//            if (car.isBusy()) {
+//                // Машина занята. Лействий в данном блоке не требуется
+//                // Т.к. я ищу НЕ занятый машины
+//            } else {
+//                // Машина не занята
+//                result.add(car);
+//            }
         }
         return result;
     }
 
-    // Возвращает список занятых автомобилей
+    /*
+    Проверка на занятость машины
+        if (car.isBusy()) {
+            // Действие с занятой машиной.
+       }
+     */
+
+    // Метод, возвращающий список всех занятых машин
     public MyList<Car> getAllBusyCars() {
         MyList<Car> result = new MyArrayList<>();
+
         for (Car car : cars) {
             if (car.isBusy()) result.add(car);
         }
         return result;
     }
 
-    // Обновляет цену автомобиля
-    //TODO: перенести в сервис
-    public boolean updateCarPrice(int id, double price) {
-        Car car = getByID(id);
-        if (car == null) return false; // метод getByID не нашёл авто с таким ID (вернул null)
-        car.setPrice(price);
-        return true;
-    }
 
-    // Удаляет автомобиль из "хранилища"
+
+
     @Override
     public void deleteCar(Car car) {
         cars.remove(car);

@@ -3,24 +3,21 @@ package utils;
 import java.lang.reflect.Array;
 import java.util.Iterator;
 
+
 /**
  * @author Sergey Bugaenko
  * {@code @date} 01.10.2024
  */
-
 /*
-
-Iterable означает, что все объекты этого класса можно перебирать (итерировать). Содержит всего один метод,
-который возвращает итератор (объект-закладку, позволяющий перебирать коллекцию).
+Iterable - означает, что все объекты этого класса можно перебирать (итерировать). Содержит всего один метод,
+который возвращает итератор (тот самый объект-закладку, который позволяет перебирать коллекцию)
 
 Iterator<T> iterator() - возвращает итератор для коллекции
-// Iterator - собственно, итератор, который позволяет обходить коллекцию
 
-boolean hasNext() - есть ли следующий объект
-
+// Iterator - собственно итератор, который позволяет обходить коллекцию.
+boolean hasNext() - есть ли следующий элемент
 T next() -> возвращает следующий элемент
-
-void remove() - необязательный. Удаляет последний возвращённый элемент
+void remove() - не обязательный. Удаляет последний возвращенный элемент.
 
  */
 
@@ -264,7 +261,7 @@ public class MyArrayList<T> implements MyList<T>, Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        // написать имплементацию итератора Iterator<T>
+        // написать имплементацию Iterator<T>
         return new MyIterator();
     }
 
@@ -272,14 +269,15 @@ public class MyArrayList<T> implements MyList<T>, Iterable<T> {
 
         int currentIndex = 0;
 
-        // boolean hasNext() - есть ли следующий элемент
+       // boolean hasNext() - есть ли следующий элемент
+
 
         @Override
         public boolean hasNext() {
             return currentIndex < cursor;
         }
 
-        // T next() -> возвращает следующий элемент
+        //  T next() -> возвращает следующий элемент
         @Override
         public T next() {
             return array[currentIndex++];
@@ -287,9 +285,11 @@ public class MyArrayList<T> implements MyList<T>, Iterable<T> {
 //            currentIndex++;
 //            return value;
         }
-    } // конец класса MyIterator
+    } // End MyIterator
 
-} // конце класса MyArrayList
+
+
+} // Класс MyArrayList
 
 /*
 1. Добавлять в массив элемент (не думая об индексах, размере массива) ++
@@ -303,4 +303,5 @@ public class MyArrayList<T> implements MyList<T>, Iterable<T> {
 9. Удаление по значению
 10. Поиск по значению. Возвращает индекс ++
 11. Написать метод lastIndexOf(int value) возвращающий индекс последнего вхождения значения в массиве.
+
  */

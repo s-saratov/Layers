@@ -6,8 +6,12 @@ import service.MainService;
 import service.MainServiceImpl;
 import view.Menu;
 
-public class CarsApp {
+/**
+ * @author Sergey Bugaenko
+ * {@code @date} 25.10.2024
+ */
 
+public class CarsApp {
     public static void main(String[] args) {
         CarRepository carRepository = new CarRepositoryImpl();
         UserRepository userRepository = new UserRepositoryImpl();
@@ -17,6 +21,7 @@ public class CarsApp {
         Menu menu = new Menu(service);
 
         menu.run();
+
 
     }
 }

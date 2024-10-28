@@ -4,41 +4,39 @@ import model.Car;
 import model.User;
 import utils.MyList;
 
+/**
+ * @author Sergey Bugaenko
+ * {@code @date} 25.10.2024
+ */
+
 public interface MainService {
 
-    // Методы
 
-    // === Create (add) ===
-
+    // Create - add
     void addCar(String model, int year, double price);
 
-    // === Read ===
-
-    // Получить список всех автомобилей
+    // READ
+    // получить список всех машин
     MyList<Car> getAllCars();
 
-    // Получить автомобиль по ID
-    // Car getByID(int id);
+    // получить авто по id
+    // Car getById(int id);
 
-    // Получить список автомобилей по модели
+    // Получить список машин по модели
     MyList<Car> getCarsByModel(String model);
 
-    // Получить список свободных автомобилей
+    // Получить список свободных машин
     MyList<Car> getFreeCars();
 
-    // === Update ===
-
+    // Update
     boolean updateCarPrice(int id, double price);
 
     boolean takeCar(int id);
 
-    // === Delete ===
-
+    // Delete
     Car deleteCar(int id);
 
-    // Методы для работы с пользователем
-
-    User registerUser (String email, String password);
+    User registerUser(String email, String password);
 
     boolean loginUser(String email, String password);
 

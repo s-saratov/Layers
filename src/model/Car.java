@@ -1,18 +1,16 @@
 package model;
 
-import java.util.Objects;
+/**
+ * @author Sergey Bugaenko
+ * {@code @date} 24.10.2024
+ */
 
 public class Car {
-
-    // Поля
-
     private final int id;
     private String model;
     private final int year;
     private double price;
     private boolean isBusy; // значение по умолчанию false
-
-    // Конструктор
 
     public Car(int id, String model, int year, double price) {
         this.id = id;
@@ -21,7 +19,30 @@ public class Car {
         this.price = price;
     }
 
-    // Геттеры и сеттеры
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Car)) return false;
+
+        Car car = (Car) o;
+        return id == car.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "id=" + id +
+                ", model='" + model + '\'' +
+                ", year=" + year +
+                ", price=" + price +
+                ", isBusy=" + isBusy +
+                '}';
+    }
 
     public int getId() {
         return id;
@@ -54,35 +75,4 @@ public class Car {
     public void setBusy(boolean busy) {
         isBusy = busy;
     }
-
-    // Метод, возвращающий строковое представление экземпляра класса
-
-    @Override
-    public String toString() {
-        return "Car{" +
-                "id=" + id +
-                ", model='" + model + '\'' +
-                ", year=" + year +
-                ", price=" + price +
-                ", isBusy=" + isBusy +
-                '}';
-    }
-
-    // Метод, проверяющий равенство двух автомобилей
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Car)) return false;
-
-        Car car = (Car) o;
-        return id == car.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
 }
-
-// TODO: спросить на консультации, почему методы equals и hashCode идут в паре
