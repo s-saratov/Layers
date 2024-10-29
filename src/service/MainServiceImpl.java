@@ -25,11 +25,7 @@ public class MainServiceImpl implements MainService{
 
     // Методы
 
-    // Возвращает автомобиль по ID
-    public Car getByID (int id) {
-        if (id < 0) return null; // исключаем передачу некорректных данных
-        return repositoryCar.getByID(id);
-    }
+    // === CREATE ===
 
     // Добавляет автомобиль в список
     @Override
@@ -37,10 +33,36 @@ public class MainServiceImpl implements MainService{
         repositoryCar.addCar(model, year, price);
     }
 
-    // Возвращает текущий список автомобилей
+    // Регистрирует пользователя на основании переданных адреса электронной почты и пароля и возвращает экземпляр класса
+    @Override
+    public User registerUser(String email, String password) {
+        // Добавить валидацию email и password
+        // Если не прошли валидацию - закончить работу метода, вернуть null
+
+        if(email == null || password == null) return null; // исключение передачи null
+
+        if(repositoryUser.isEmailExists(email)) {
+            System.out.println("Email already exists");
+            return null;
+        }
+
+        User user = repositoryUser.addUser(email, password);
+
+        return user;
+    }
+
+    // === READ ===
+
+    // Возвращает текущий список всех автомобилей
     @Override
     public MyList<Car> getAllCars() {
         return repositoryCar.getAllCars();
+    }
+
+    // Возвращает автомобиль по ID
+    public Car getByID (int id) {
+        if (id < 0) return null; // исключаем передачу некорректных данных
+        return repositoryCar.getByID(id);
     }
 
     // Возвращает список автомобилей по модели
@@ -55,7 +77,26 @@ public class MainServiceImpl implements MainService{
         return repositoryCar.getFreeCars();
     }
 
-    // Обновляет цену автомобиля
+    // Возвращает объект пользователя по адресу электронной почты
+    public User getUserByEmail(String email) {
+        return repositoryUser.getUserByEmail(email);
+    }
+
+    // Возвращает активного пользователя
+    @Override
+    public User getActiveUser() {
+        return activeUser;
+    }
+
+    // Возвращает список пользователей по заданным ролям
+    @Override
+    public MyList<User> getUsersByRole(Role... roles) {
+        return repositoryUser.getUsersByRole(roles);
+    }
+
+    // === UPDATE ===
+
+    // Обновляет цену автомобиля и возвращает статус успеха операции
     @Override
     public boolean updateCarPrice(int id, double price) {
         Car car = repositoryCar.getByID(id);
@@ -83,7 +124,6 @@ public class MainServiceImpl implements MainService{
     }
 
     // Осуществляет возврат автомобиля от арендатора и возвращает статус успеха операции
-
     @Override
     public boolean returnCar(int id) {
         if (id < 0) return false; // исключаем передачу некорректных данных
@@ -95,33 +135,7 @@ public class MainServiceImpl implements MainService{
         return true;
     }
 
-    // Удаляет автомобиль из хранилища
-    @Override
-    public Car deleteCar(int id) {
-        Car car = repositoryCar.getByID(id);
-        if (car == null) return null;
-
-        repositoryCar.deleteCar(car);
-        return car;
-    }
-
-    @Override
-    public User registerUser(String email, String password) {
-        // Добавить валидацию email и password
-        // Если не прошли валидацию - закончить работу метода, вернуть null
-
-        if(email == null || password == null) return null; // исключение передачи null
-
-        if(repositoryUser.isEmailExists(email)) {
-            System.out.println("Email already exists");
-            return null;
-        }
-
-        User user = repositoryUser.addUser(email, password);
-
-        return user;
-    }
-
+    // Осуществляет вход пользователя в систему и возвращает статус успеха операции
     @Override
     public boolean loginUser(String email, String password) {
 
@@ -156,25 +170,22 @@ public class MainServiceImpl implements MainService{
         return true;
     }
 
+    // Осуществляет выход пользователя из системы
     @Override
     public void logout() {
         activeUser = null;
     }
 
-    // Возвращает активного пользователя
+    // === DELETE ===
+
+    // Удаляет автомобиль из хранилища
     @Override
-    public User getActiveUser() {
-        return activeUser;
+    public Car deleteCar(int id) {
+        Car car = repositoryCar.getByID(id);
+        if (car == null) return null;
+
+        repositoryCar.deleteCar(car);
+        return car;
     }
 
-    // Возвращает список пользователей по заданным ролям
-    @Override
-    public MyList<User> getUsersByRole(Role... roles) {
-        return repositoryUser.getUsersByRole(roles);
-    }
-
-    // Возвращает объект пользователя по адресу электронной почты
-    public User getUserByEmail(String email) {
-        return repositoryUser.getUserByEmail(email);
-    }
 }

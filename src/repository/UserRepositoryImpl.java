@@ -23,6 +23,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     // Методы
 
+    // === CREATE ===
+
     // Добавляет пользователя в список
     @Override
     public User addUser(String email, String password) {
@@ -32,6 +34,8 @@ public class UserRepositoryImpl implements UserRepository {
         users.add(user);
         return user;
     }
+
+    // === READ ===
 
     // Проверяет, существует ли данный адрес электронной почты
     @Override

@@ -9,16 +9,20 @@ public interface MainService {
 
     // Методы
 
-    // === Create (add) ===
+    // === CREATE (add) ===
 
+    // Добавляет автомобиль в список
     void addCar(String model, int year, double price);
 
-    // === Read ===
+    // Регистрирует пользователя на основании переданных адреса электронной почты и пароля и возвращает экземпляр класса
+    User registerUser (String email, String password);
 
-    // Получить список всех автомобилей
+    // === READ ===
+
+    // Возвращает текущий список всех автомобилей
     MyList<Car> getAllCars();
 
-    // Получить автомобиль по ID
+    // Возвращает автомобиль по ID
     Car getByID(int id);
 
     // Получить список автомобилей по модели
@@ -30,30 +34,31 @@ public interface MainService {
     // Получить объект пользователя по адресу электронной почты
     public User getUserByEmail(String email);
 
-    // Получить список пользователей по заданным ролям
-    public MyList<User> getUsersByRole(Role... roles);
-
-    // === Update ===
-
-    boolean updateCarPrice(int id, double price);
-
-    boolean takeCar(int id);
-
-    boolean returnCar (int id);
-
-    // === Delete ===
-
-    Car deleteCar(int id);
-
-    // Методы для работы с пользователем
-
     // Возвращает активного пользователя
     public User getActiveUser();
 
-    User registerUser (String email, String password);
+    // Получить список пользователей по заданным ролям
+    public MyList<User> getUsersByRole(Role... roles);
 
+    // === UPDATE ===
+
+    // Обновляет цену автомобиля и возвращает статус успеха операции
+    boolean updateCarPrice(int id, double price);
+
+    // Осуществляет взятие автомобиля в аренду и возвращает статус успеха операции
+    boolean takeCar(int id);
+
+    // Осуществляет возврат автомобиля от арендатора и возвращает статус успеха операции
+    boolean returnCar (int id);
+
+    // Осуществляет вход пользователя в систему и возвращает статус успеха операции
     boolean loginUser(String email, String password);
 
+    // Осуществляет выход пользователя из системы
     void logout();
+
+    // === DELETE ===
+
+    Car deleteCar(int id);
 
 }

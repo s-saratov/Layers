@@ -33,6 +33,8 @@ public class CarRepositoryImpl implements CarRepository {
 
     // Методы
 
+    // === CREATE ===
+
     // Добавляет автомобиль в "хранилище"
     @Override
     public void addCar(String model, int year, double price) {
@@ -40,6 +42,8 @@ public class CarRepositoryImpl implements CarRepository {
         Car car = new Car(currentID.getAndIncrement(), model, year, price);
         cars.add(car); // сохранение в "хранилище"
     }
+
+    // === READ ===
 
     // Возвращает текущий список автомобилей
     @Override
@@ -85,6 +89,8 @@ public class CarRepositoryImpl implements CarRepository {
         return result;
     }
 
+    // === UPDATE ===
+
     // Обновляет цену автомобиля
     //TODO: перенести в сервис
     public boolean updateCarPrice(int id, double price) {
@@ -93,6 +99,8 @@ public class CarRepositoryImpl implements CarRepository {
         car.setPrice(price);
         return true;
     }
+
+    // === DELETE ===
 
     // Удаляет автомобиль из "хранилища"
     @Override

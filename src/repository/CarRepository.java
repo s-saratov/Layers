@@ -13,10 +13,10 @@ import utils.MyList;
 
 public interface CarRepository {
 
-    // Create - add
+    // === CREATE (add) ===
     void addCar(String model, int year, double price);
 
-    // Read
+    // === READ ===
 
     // Получить список всех автомобилей
     MyList<Car> getAllCars();

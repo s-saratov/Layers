@@ -6,10 +6,12 @@ import utils.MyList;
 
 public interface UserRepository {
 
-    // Методы
+    // === CREATE ===
 
     // Добавляет пользователя в список
     User addUser(String email, String password);
+
+    // === READ ===
 
     // Проверяет, существует ли данный адрес электронной почты
     boolean isEmailExists(String email);
