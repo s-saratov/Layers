@@ -25,19 +25,19 @@ public interface MainService {
     // Возвращает автомобиль по ID
     Car getByID(int id);
 
-    // Получить список автомобилей по модели
+    // Возвращает список автомобилей по модели
     MyList<Car> getCarsByModel(String model);
 
-    // Получить список свободных автомобилей
+    // Возвращает список свободных автомобилей
     MyList<Car> getFreeCars();
 
-    // Получить объект пользователя по адресу электронной почты
+    // Возвращает объект пользователя по адресу электронной почты
     public User getUserByEmail(String email);
 
     // Возвращает активного пользователя
     public User getActiveUser();
 
-    // Получить список пользователей по заданным ролям
+    // Возвращает список пользователей по заданным ролям
     public MyList<User> getUsersByRole(Role... roles);
 
     // === UPDATE ===
@@ -59,6 +59,7 @@ public interface MainService {
 
     // === DELETE ===
 
+    // Удаляет автомобиль по id
     Car deleteCar(int id);
 
 }

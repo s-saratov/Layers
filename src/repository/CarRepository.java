@@ -14,23 +14,27 @@ import utils.MyList;
 public interface CarRepository {
 
     // === CREATE (add) ===
+
+    // Добавляет автомобиль в "хранилище"
     void addCar(String model, int year, double price);
 
     // === READ ===
 
-    // Получить список всех автомобилей
+    // Возвращает список всех автомобилей
     MyList<Car> getAllCars();
 
-    // Получить автомобиль по ID
+    // Возвращает автомобиль по ID
     Car getByID(int id);
 
-    // Получить список автомобилей по модели
+    // Возвращает список автомобилей по модели
     MyList<Car> getCarsByModel(String model);
 
-    // Получить список свободных автомобилей
+    // Возвращает список свободных автомобилей
     MyList<Car> getFreeCars();
 
-    // Delete
+    // === DELETE ===
+
+    // Удаляет автомобиль
     void deleteCar(Car car);
 
 }
